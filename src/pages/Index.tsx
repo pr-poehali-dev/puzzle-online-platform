@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 import HanoiTower from '@/components/HanoiTower';
+import SlidingPuzzle from '@/components/SlidingPuzzle';
 
 const PUZZLES = [
   {
@@ -62,15 +63,15 @@ const PUZZLES = [
   },
   {
     id: 5,
-    title: 'Кубик Рубика 2x2',
+    title: 'Пятнашки',
     category: 'Головоломки',
-    difficulty: 'Легкая',
-    rating: 4.5,
-    solvers: 23451,
-    description: 'Упрощённая версия легендарного кубика.',
+    difficulty: 'Средняя',
+    rating: 4.6,
+    solvers: 18934,
+    description: 'Классическая игра на перемещение плиток.',
     level: 1,
-    time: '10 мин',
-    icon: 'Box',
+    time: '15 мин',
+    icon: 'Grid3x3',
     gradient: 'from-yellow-500 to-orange-500'
   },
   {
@@ -99,6 +100,7 @@ const LEADERS = [
 export default function Index() {
   const [selectedPuzzle, setSelectedPuzzle] = useState<typeof PUZZLES[0] | null>(null);
   const [showHanoi, setShowHanoi] = useState(false);
+  const [showSliding, setShowSliding] = useState(false);
   const [userLevel, setUserLevel] = useState(3);
   const [userXP, setUserXP] = useState(1250);
   const maxXP = userLevel * 1000;
@@ -235,6 +237,8 @@ export default function Index() {
               onClick={() => {
                 if (puzzle.id === 3) {
                   setShowHanoi(true);
+                } else if (puzzle.id === 5) {
+                  setShowSliding(true);
                 } else {
                   setSelectedPuzzle(puzzle);
                 }
@@ -370,6 +374,12 @@ export default function Index() {
       <Dialog open={showHanoi} onOpenChange={setShowHanoi}>
         <DialogContent className="max-w-5xl">
           <HanoiTower />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showSliding} onOpenChange={setShowSliding}>
+        <DialogContent className="max-w-3xl">
+          <SlidingPuzzle />
         </DialogContent>
       </Dialog>
 
