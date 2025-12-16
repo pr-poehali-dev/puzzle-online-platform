@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
+import HanoiTower from '@/components/HanoiTower';
 
 const PUZZLES = [
   {
@@ -97,6 +98,7 @@ const LEADERS = [
 
 export default function Index() {
   const [selectedPuzzle, setSelectedPuzzle] = useState<typeof PUZZLES[0] | null>(null);
+  const [showHanoi, setShowHanoi] = useState(false);
   const [userLevel, setUserLevel] = useState(3);
   const [userXP, setUserXP] = useState(1250);
   const maxXP = userLevel * 1000;
@@ -230,7 +232,13 @@ export default function Index() {
               key={puzzle.id}
               className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer animate-fade-in border-2 hover:border-purple-300"
               style={{ animationDelay: `${idx * 0.1}s` }}
-              onClick={() => setSelectedPuzzle(puzzle)}
+              onClick={() => {
+                if (puzzle.id === 3) {
+                  setShowHanoi(true);
+                } else {
+                  setSelectedPuzzle(puzzle);
+                }
+              }}
             >
               <CardHeader>
                 <div className={`w-full h-32 rounded-lg bg-gradient-to-br ${puzzle.gradient} flex items-center justify-center text-white text-5xl mb-4 group-hover:scale-105 transition-transform`}>
@@ -356,6 +364,12 @@ export default function Index() {
               </div>
             </>
           )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showHanoi} onOpenChange={setShowHanoi}>
+        <DialogContent className="max-w-5xl">
+          <HanoiTower />
         </DialogContent>
       </Dialog>
 
